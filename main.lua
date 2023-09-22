@@ -4,7 +4,7 @@ RegisterCommand('generate-token', function(serverId, args)
   if serverId ~= 0 then
     return
   end
-  local token = math.random(100000, 999999)
+  local token = math.random(1000, 9999)
   print(('Token: (%s)'):format(token))
   tokens[tostring(token)] = true
 end, true)
