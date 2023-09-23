@@ -4,9 +4,18 @@ RegisterCommand('generate-token', function(serverId, args)
   if serverId ~= 0 then
     return
   end
+
+  local token = next(tokens)
+
+  if token then
+    print(('Token: (%s)'):format(token))
+    return
+  end
+
   local token = math.random(1000, 9999)
   print(('Token: (%s)'):format(token))
   tokens[tostring(token)] = true
+
 end, true)
 
 RegisterCommand('list-tokens',  function(serverId)
@@ -54,7 +63,7 @@ AddEventHandler('playerConnecting', function(name, skr, d)
     "body": [
         {
             "type": "Input.Text",
-            "placeholder": "Placeholder text",
+            "placeholder": "Token",
             "id": "txtToken"
         }
     ]
