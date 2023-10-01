@@ -1,0 +1,5 @@
+
+WHITELISTED = {
+  "license:123"
+}
+

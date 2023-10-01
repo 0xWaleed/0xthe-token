@@ -5,6 +5,24 @@ function random_token()
   return math.random(1000, 9999)
 end
 
+
+function getPlayerIdentifier(serverId)
+	for k, v in ipairs(GetPlayerIdentifiers(serverId)) do
+		if string.sub(v, 1, string.len("license:")) == "license:" then
+			return v
+		end
+	end
+end
+
+function is_whitelisted_identifier(identifier)
+  for k, v in ipairs(WHITELISTED) do
+    if v == identifier then
+      return true
+    end
+  end
+  return false
+end
+
 RegisterCommand('generate-token', function(serverId, args)
   if serverId ~= 0 then
     return
@@ -41,6 +59,16 @@ AddEventHandler('playerConnecting', function(name, skr, d)
   d.defer()
 
   Wait(50)
+
+  local identifier = getPlayerIdentifier(serverId)
+
+  print('identifier: ' .. identifier)
+
+  if is_whitelisted_identifier(identifier) then
+    print('identifier is whitelisted')
+    d.done()
+    return
+  end
 
   function onResponse(data, rawData)
     local token = data['txtToken']
