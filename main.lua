@@ -1,5 +1,10 @@
 local tokens = {}
 
+function random_token()
+  math.randomseed(os.time())
+  return math.random(1000, 9999)
+end
+
 RegisterCommand('generate-token', function(serverId, args)
   if serverId ~= 0 then
     return
@@ -12,7 +17,7 @@ RegisterCommand('generate-token', function(serverId, args)
     return
   end
 
-  local token = math.random(1000, 9999)
+  local token = random_token()
   print(('Token: (%s)'):format(token))
   tokens[tostring(token)] = true
 
